@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 3 Math Thinker Ms. Amira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Lexend:wght@400;500;600&family=DM+Mono:wght@500&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --stage:#0E4D5C; --stage-2:#0A3B47; --card:#FFFDF7; --card-2:#F3EFE4; --ink:#1D2B3A; --muted:#5C6878; --line:#E3DDCF;
+  --coral:#FF5E5B; --sun:#FFC93C; --mint:#22B8A7; --grape:#6C5CE7; --good:#1E9E62; --good-bg:#DDF5E8; --bad:#E0413E; --bad-bg:#FDE3E2;
+  --display:"Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --body:"Lexend", "Segoe UI", system-ui, sans-serif;
+  --mono:"DM Mono", ui-monospace, Consolas, monospace;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  background-color:var(--stage);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='%23ffffff' fill-opacity='.06' font-family='Arial' font-size='26' font-weight='700'%3E%3Ctext x='10' y='34'%3E%C3%B7%3C/text%3E%3Ctext x='70' y='50'%3E%C3%97%3C/text%3E%3Ctext x='30' y='100'%3E.5%3C/text%3E%3Ctext x='84' y='108'%3E%C2%BD%3C/text%3E%3C/g%3E%3C/svg%3E");
+  color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.5;
+  padding-inline:16px; padding-block:14px 40px;
+}
+h1,h2,h3{font-family:var(--display); line-height:1.1; margin:0; text-wrap:balance}
+p{margin:0}
+button{font:inherit; color:inherit; cursor:pointer}
+:focus-visible{outline:3px solid var(--sun); outline-offset:2px}
+.app{max-width:960px; margin:0 auto; display:grid; gap:14px}
+
+/* top bar */
+.bar{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.logo{background:#fff; border-radius:14px; padding:6px 12px; display:flex; align-items:center; box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.logo img{height:42px; width:auto; display:block}
+.gname{color:#fff; font-family:var(--display); font-weight:800; font-size:1.3rem; line-height:1.05; flex:1; min-width:180px}
+.gname small{display:block; font-family:var(--body); font-weight:500; font-size:.8rem; color:var(--sun); letter-spacing:.08em; text-transform:uppercase}
+.iconbtn{background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.3); color:#fff; border-radius:12px; padding:8px 12px; font-weight:600; font-size:.9rem}
+
+.card{background:var(--card); border-radius:26px; padding:28px; box-shadow:0 18px 40px rgba(0,0,0,.25); position:relative; overflow:hidden}
+
+/* start */
+.start{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center}
+.kicker{font-size:.78rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--mint)}
+.start h1{font-size:clamp(2.4rem, 6vw, 3.8rem); font-weight:800; margin-top:4px}
+.start h1 .m3{color:var(--coral)}
+.start h1 .who{display:block; font-size:.5em; color:var(--grape); margin-top:4px}
+.lead{color:var(--muted); margin-top:10px; max-width:34rem}
+.rules{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px}
+.rules span{background:var(--card-2); border-radius:999px; padding:5px 12px; font-size:.85rem; font-weight:500}
+.form{display:grid; gap:12px; margin-top:22px; max-width:420px}
+.form label{font-weight:600; font-size:.9rem; display:block; margin-bottom:4px}
+.form input, .form select, .pin input{width:100%; font:inherit; font-size:1.1rem; padding:12px 14px; border:2px solid var(--line); border-radius:14px; background:#fff; color:var(--ink)}
+.form input:focus, .form select:focus{border-color:var(--mint); outline:none}
+.row2{display:grid; grid-template-columns:1fr 120px; gap:10px}
+.err{color:var(--bad); font-size:.9rem; font-weight:500}
+.btn{border:0; border-radius:16px; padding:14px 22px; font-family:var(--display); font-weight:800; font-size:1.25rem; line-height:1; display:inline-flex; align-items:center; justify-content:center; gap:8px; transition:transform .12s ease, box-shadow .12s ease}
+.btn:active{transform:translateY(2px)}
+.btn.go{background:var(--coral); color:#fff; box-shadow:0 6px 0 #C9403E}
+.btn.go:active{box-shadow:0 2px 0 #C9403E}
+.btn.soft{background:var(--card-2); color:var(--ink); box-shadow:0 5px 0 var(--line)}
+.btn.mint{background:var(--mint); color:#fff; box-shadow:0 6px 0 #178A7D}
+.judge-hero{display:flex; flex-direction:column; align-items:center; gap:6px}
+.judge-hero svg{width:100%; max-width:260px; height:auto}
+.bubble{background:var(--sun); color:var(--ink); border-radius:18px; padding:10px 14px; font-weight:600; font-size:.95rem; position:relative; text-align:center; max-width:280px}
+
+.board h3{font-size:1.3rem; margin-bottom:8px}
+.board ol{list-style:none; margin:0; padding:0; display:grid; gap:6px}
+.board li{display:grid; grid-template-columns:34px 1fr auto; gap:8px; align-items:center; background:var(--card-2); border-radius:12px; padding:7px 12px; font-size:.95rem}
+.board li .r{font-family:var(--display); font-weight:800; text-align:center}
+.board li .s{font-family:var(--mono); font-weight:500}
+.board li small{color:var(--muted)}
+.board li.me{background:#FFF1C4; outline:2px solid var(--sun)}
+.board .empty{color:var(--muted); font-size:.92rem}
+details.teacher{margin-top:10px; font-size:.85rem; color:var(--muted)}
+details.teacher summary{cursor:pointer}
+.pin{display:flex; gap:8px; margin-top:8px; flex-wrap:wrap}
+.pin input{width:130px; font-size:.95rem; padding:8px 10px}
+.pin button{border:0; background:var(--ink); color:#fff; border-radius:10px; padding:8px 12px; font-weight:600}
+
+/* play */
+.hud{display:flex; gap:10px; flex-wrap:wrap; align-items:stretch}
+.hud .h{background:rgba(255,255,255,.12); color:#fff; border-radius:14px; padding:6px 14px; display:flex; flex-direction:column; justify-content:center}
+.hud .h small{font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.7); font-weight:600}
+.hud .h b{font-family:var(--display); font-size:1.35rem; line-height:1.1}
+.hud .h.player{flex:1; min-width:150px}
+.shelf{font-size:1.2rem; letter-spacing:2px; min-height:1.6em}
+.timer{position:relative; height:26px; background:rgba(255,255,255,.14); border-radius:99px; overflow:hidden}
+.timer i{position:absolute; inset:0 auto 0 0; background:var(--mint); border-radius:99px; transition:width .1s linear, background .3s}
+.timer i.warn{background:var(--sun)} .timer i.danger{background:var(--coral)}
+.timer span{position:absolute; inset:0; display:grid; place-items:center; color:#fff; font-weight:600; font-size:.85rem; text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.qtop{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px}
+.part{background:var(--grape); color:#fff; border-radius:999px; padding:4px 12px; font-size:.8rem; font-weight:600}
+.part.p2{background:var(--mint)} .part.p3{background:var(--coral)} .part.bonus{background:var(--sun); color:var(--ink)}
+.qnum{font-weight:600; color:var(--muted); font-size:.9rem}
+.question{font-family:var(--display); font-weight:700; font-size:clamp(1.5rem, 4vw, 2.2rem); line-height:1.25; margin-bottom:6px}
+.hint{color:var(--muted); font-size:.92rem; margin-bottom:18px}
+.eq{font-family:var(--mono); font-weight:500; white-space:nowrap}
+.frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; line-height:1.02; font-family:var(--mono); font-size:.82em; margin-inline:3px}
+.frac span:first-child{border-bottom:.1em solid currentColor; padding-inline:.18em}
+.mixed{white-space:nowrap; font-family:var(--mono)}
+.choices{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.choice{display:flex; align-items:center; gap:14px; text-align:left; border:3px solid var(--line); background:#fff; border-radius:18px; padding:14px 16px; font-size:1.35rem; min-height:78px; transition:transform .12s, border-color .12s, background .12s}
+.choice:hover:not(:disabled){border-color:var(--grape); transform:translateY(-2px)}
+.choice .k{flex:none; width:40px; height:40px; border-radius:12px; display:grid; place-items:center; font-family:var(--display); font-weight:800; font-size:1.2rem; color:#fff}
+.choice:nth-child(1) .k{background:var(--grape)} .choice:nth-child(2) .k{background:var(--mint)}
+.choice:nth-child(3) .k{background:var(--coral)} .choice:nth-child(4) .k{background:#E39B00}
+.choice .v{font-family:var(--mono); font-weight:500}
+.choice:disabled{cursor:default}
+.choice.right{border-color:var(--good); background:var(--good-bg)}
+.choice.wrong{border-color:var(--bad); background:var(--bad-bg)}
+.choice.dim{opacity:.45}
+
+#qCard{min-height:500px}
+/* feedback overlays */
+.overlay{position:absolute; inset:0; overflow-y:auto; background:rgba(255,253,247,.97); display:flex; align-items:center; justify-content:center; padding:24px; z-index:5}
+.fb{display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:center; max-width:760px; width:100%}
+.fb h2{font-size:clamp(1.8rem, 5vw, 2.6rem); font-weight:800}
+.fb .msg{font-size:1.05rem; margin-top:6px}
+.fb .pts{display:flex; flex-wrap:wrap; gap:6px; margin-top:12px}
+.fb .pts span{background:var(--card-2); border-radius:10px; padding:4px 10px; font-family:var(--mono); font-size:.9rem}
+.fb .pts span.tot{background:var(--sun); font-weight:500}
+.fb .why{margin-top:12px; background:var(--card-2); border-radius:14px; padding:12px 14px; font-size:.98rem}
+.fb .why b{color:var(--good)}
+.fb .actions{margin-top:16px; display:flex; gap:10px; flex-wrap:wrap}
+.reward h2{color:var(--good)}
+.sticker{width:170px; height:170px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #FFF6D6, var(--sun)); display:grid; place-items:center; font-size:86px; box-shadow:0 10px 0 #E0A80F, 0 16px 30px rgba(0,0,0,.18); position:relative}
+.sticker::after{content:"+1 sticker"; position:absolute; bottom:-12px; background:var(--coral); color:#fff; font-size:.8rem; font-weight:700; border-radius:999px; padding:3px 10px; font-family:var(--body)}
+.judge h2{color:var(--bad)}
+.judge .jsvg{width:220px; max-width:40vw}
+.judge .jsvg svg{width:100%; height:auto; display:block}
+.speech{display:inline-block; background:var(--ink); color:#fff; border-radius:16px; padding:8px 14px; font-weight:600; font-size:1rem; margin-bottom:8px}
+.col{font-family:var(--mono); background:#fff; border:2px dashed var(--line); border-radius:12px; padding:8px 16px; display:inline-block; margin-top:8px; line-height:1.35; font-size:1.1rem; white-space:pre}
+.col u{text-decoration:none; border-bottom:2px solid var(--ink); display:inline-block}
+
+@media (prefers-reduced-motion: no-preference){
+  .pop{animation:pop .55s cubic-bezier(.2,1.6,.4,1) both}
+  @keyframes pop{0%{transform:scale(.2) rotate(-25deg); opacity:0} 100%{transform:none; opacity:1}}
+  .wobble{animation:wobble .9s ease-in-out 2}
+  @keyframes wobble{25%{transform:rotate(-6deg)} 75%{transform:rotate(6deg)}}
+  .shake{animation:shake .4s ease}
+  @keyframes shake{20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)}}
+  .count{animation:count .9s ease both}
+  @keyframes count{0%{transform:scale(2.2); opacity:0} 30%{opacity:1; transform:scale(1)} 100%{opacity:.9}}
+}
+.countdown{position:absolute; inset:0; display:grid; place-items:center; background:var(--card); z-index:6; text-align:center}
+.countdown b{display:block; font-family:var(--display); font-weight:800; font-size:8rem; color:var(--coral); line-height:1}
+.countdown p{font-weight:600; font-size:1.2rem; color:var(--muted)}
+
+/* end */
+.end{display:grid; grid-template-columns:1fr 1fr; gap:26px}
+.big{font-family:var(--display); font-weight:800; font-size:clamp(3.4rem, 10vw, 5rem); color:var(--coral); line-height:1}
+.stars{font-size:2.4rem; color:var(--sun); letter-spacing:6px}
+.stars .off{color:var(--line)}
+.end .sum{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+.end .sum div{background:var(--card-2); border-radius:14px; padding:8px 14px}
+.end .sum small{display:block; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:600}
+.end .sum b{font-family:var(--display); font-size:1.5rem}
+.review{margin-top:18px}
+.review h3{font-size:1.2rem; margin-bottom:8px}
+.review ul{list-style:none; padding:0; margin:0; display:grid; gap:8px}
+.review li{background:var(--bad-bg); border-radius:12px; padding:10px 12px; font-size:.95rem}
+.review li.ok{background:var(--good-bg)}
+.end .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+
+canvas#fx{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:50}
+
+@media (max-width: 760px){
+  .start, .end{grid-template-columns:1fr}
+  .judge-hero svg{max-width:190px}
+  .fb{grid-template-columns:1fr; justify-items:center; text-align:center}
+  .fb .pts, .fb .actions{justify-content:center}
+  .overlay{position:absolute; align-items:flex-start; overflow-y:auto}
+  .sticker{width:130px; height:130px; font-size:64px}
+}
+@media (max-width: 560px){
+  .card{padding:20px}
+  .choices{grid-template-columns:1fr}
+  .choice{min-height:64px; font-size:1.2rem}
+  .logo img{height:34px}
+}
+</style>
+
+<div class="app">
+  <header class="bar">
+    <div class="logo"><img src="data:image/jpeg;base64,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" alt="Inspire International Academy"></div>
+    <div class="gname">Module 3 Math Thinker<small>Ms. Amira · Grade 6</small></div>
+    <button class="iconbtn" id="soundBtn" type="button" aria-pressed="true">🔊 Sound on</button>
+  </header>
+
+  <!-- START -->
+  <section class="card" id="scrStart">
+    <div class="start">
+      <div>
+        <span class="kicker">Quiz 1 practice · Module 3</span>
+        <h1><span class="m3">Module 3</span> Math Thinker<span class="who">with Ms. Amira</span></h1>
+        <p class="lead">12 timed questions like the ones in Quiz 1: division words, reciprocals, multiplying decimals, adding and subtracting decimals, and dividing fractions. New numbers every game!</p>
+        <div class="rules"><span>⏱ Timer on every question</span><span>🌟 Stickers for right answers</span><span>👨‍⚖️ The Judge catches mistakes</span><span>🏆 Class leaderboard</span></div>
+        <form class="form" id="startForm" novalidate>
+          <div class="row2">
+            <div><label for="pName">Your name</label><input id="pName" maxlength="24" autocomplete="off" placeholder="e.g. Layan"></div>
+            <div><label for="pClass">Class</label><select id="pClass"><option>6/1</option><option>6/2</option><option>6/3</option><option>6/4</option><option>6/5</option></select></div>
+          </div>
+          <p class="err" id="nameErr" hidden>Type your name first so we can save your score.</p>
+          <button class="btn go" type="submit">Start the game ▶</button>
+        </form>
+      </div>
+      <div class="judge-hero">
+        <div class="bubble">I’m Judge Oops! Get it wrong and I’ll make a funny face. Get it right and you win a sticker!</div>
+        <div id="heroJudge"></div>
+      </div>
+    </div>
+    <hr style="border:0;border-top:2px dashed var(--line);margin:24px 0">
+    <div class="board" id="boardStart"></div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="scrPlay" hidden>
+    <div class="app">
+      <div class="hud">
+        <div class="h player"><small>Player</small><b id="hName">–</b><div class="shelf" id="hShelf" aria-label="Stickers collected"></div></div>
+        <div class="h"><small>Question</small><b id="hQ">1/12</b></div>
+        <div class="h"><small>Score</small><b id="hScore">0</b></div>
+        <div class="h"><small>Streak</small><b id="hStreak">0</b></div>
+      </div>
+      <div class="timer" aria-hidden="true"><i id="tBar" style="width:100%"></i><span id="tTxt">30 s</span></div>
+      <div class="card" id="qCard">
+        <div class="qtop"><span class="part" id="qPart">Part 1</span><span class="qnum" id="qNum"></span></div>
+        <div class="question" id="qText"></div>
+        <p class="hint" id="qHint"></p>
+        <div class="choices" id="qChoices"></div>
+        <div id="qOverlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- END -->
+  <section class="card" id="scrEnd" hidden></section>
+</div>
+<canvas id="fx"></canvas>
+
+<script>
+(function(){
+const $ = s => document.querySelector(s);
+const rnd = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const shuffle = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const gcd = (a,b) => { a=Math.abs(a); b=Math.abs(b); while(b){ [a,b]=[b,a%b]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store = { get(k,d){ try{ const v=localStorage.getItem(k); return v===null?d:JSON.parse(v); }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} } };
+
+/* ================= SOUND ================= */
+const S = {
+  ctx:null, on: store.get('m3-sound', true),
+  init(){ if(!this.ctx){ try{ this.ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ this.ctx=null; } } if(this.ctx && this.ctx.state==='suspended') this.ctx.resume(); },
+  tone(f, t, dur, type='sine', vol=.18, fEnd=null){
+    const c=this.ctx, o=c.createOscillator(), g=c.createGain(), t0=c.currentTime+t;
+    o.type=type; o.frequency.setValueAtTime(f,t0); if(fEnd) o.frequency.exponentialRampToValueAtTime(fEnd, t0+dur);
+    g.gain.setValueAtTime(.0001,t0); g.gain.exponentialRampToValueAtTime(vol,t0+.015); g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
+    o.connect(g).connect(c.destination); o.start(t0); o.stop(t0+dur+.05);
+  },
+  noise(t, dur, vol=.5){
+    const c=this.ctx, b=c.createBuffer(1, c.sampleRate*dur, c.sampleRate), d=b.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);
+    const s=c.createBufferSource(), f=c.createBiquadFilter(), g=c.createGain(); s.buffer=b; f.type='lowpass'; f.frequency.value=900; g.gain.value=vol;
+    s.connect(f).connect(g).connect(c.destination); s.start(c.currentTime+t);
+  },
+  trombone(){
+    const c=this.ctx; const notes=[[392,0,.32],[370,.36,.32],[349,.72,.32],[330,1.08,1.0]];
+    notes.forEach(([f,t,dur],i)=>{
+      const o=c.createOscillator(), g=c.createGain(), lp=c.createBiquadFilter(), t0=c.currentTime+t+.35;
+      o.type='sawtooth'; o.frequency.setValueAtTime(f,t0); lp.type='lowpass'; lp.frequency.value=1400;
+      if(i===3){ const l=c.createOscillator(), lg=c.createGain(); l.frequency.value=6; lg.gain.value=9; l.connect(lg).connect(o.frequency); l.start(t0); l.stop(t0+dur); o.frequency.linearRampToValueAtTime(300,t0+dur); }
+      g.gain.setValueAtTime(.0001,t0); g.gain.exponentialRampToValueAtTime(.11,t0+.04); g.gain.setValueAtTime(.11,t0+dur-.08); g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
+      o.connect(lp).connect(g).connect(c.destination); o.start(t0); o.stop(t0+dur+.05);
+    });
+  },
+  play(n){
+    if(!this.on || !this.ctx) return;
+    try{
+      switch(n){
+        case 'question': this.tone(660,0,.14,'triangle',.16); this.tone(990,.11,.3,'triangle',.16); break;
+        case 'tick': this.tone(1300,0,.06,'square',.05); break;
+        case 'count': this.tone(520,0,.18,'triangle',.2); break;
+        case 'go': this.tone(1040,0,.35,'triangle',.22); break;
+        case 'correct': [523,659,784,1047].forEach((f,i)=>this.tone(f,i*.085,i===3?.45:.16,'triangle',.2)); this.tone(2093,.36,.3,'sine',.07); this.tone(2637,.44,.3,'sine',.06); break;
+        case 'wrong': this.noise(0,.12,.9); this.tone(110,0,.15,'sine',.4); this.noise(.2,.12,.9); this.tone(100,.2,.15,'sine',.4); this.trombone(); break;
+        case 'boing': this.tone(180,0,.35,'sine',.25,700); break;
+        case 'timeup': this.tone(190,0,.35,'square',.09); this.tone(150,.38,.5,'square',.09); break;
+        case 'snore': this.tone(120,0,.8,'sawtooth',.05,90); break;
+        case 'fanfare': [[523,0],[659,.15],[784,.3],[1047,.45],[784,.62],[1047,.76]].forEach(([f,t],i)=>this.tone(f,t,i===5?.7:.18,'triangle',.2)); break;
+        case 'click': this.tone(700,0,.05,'sine',.08); break;
+      }
+    }catch(e){}
+  }
+};
+function soundLabel(){ const b=$('#soundBtn'); b.textContent = S.on ? '🔊 Sound on' : '🔇 Sound off'; b.setAttribute('aria-pressed', S.on); }
+$('#soundBtn').addEventListener('click', () => { S.on=!S.on; store.set('m3-sound', S.on); S.init(); soundLabel(); S.play('click'); });
+soundLabel();
+
+/* ================= FRACTIONS & FORMAT ================= */
+function fr(n,d){ const g=gcd(n,d)||1; return {n:n/g, d:d/g}; }
+function F(n,d){ return `<span class="frac"><span>${n}</span><span>${d}</span></span>`; }
+function frH(n,d){ const f=fr(n,d); if(f.d===1) return `<span class="mixed">${f.n}</span>`; if(f.n>f.d) return `<span class="mixed">${Math.floor(f.n/f.d)}${F(f.n%f.d,f.d)}</span>`; return F(f.n,f.d); }
+function frC(n,d){ const f=fr(n,d); return {h:frH(n,d), k:`${f.n}/${f.d}`, n:f.n, d:f.d}; }
+const numS = x => String(parseFloat((Math.round(x*10000)/10000).toFixed(4)));
+const numC = x => ({h:`<span class="v">${numS(x)}</span>`, k:numS(x), x});
+const wordC = w => ({h:w, k:w});
+function mixedH(w,n,d){ return `<span class="mixed">${w}${F(n,d)}</span>`; }
+
+// vertical working for decimal +/−
+function column(a, b, op, ans){
+  const dp = Math.max(...[a,b,ans].map(s => (s.split('.')[1]||'').length));
+  const pad = s => { const [i,f=''] = s.split('.'); return i + (dp? '.'+f.padEnd(dp,'0') : ''); };
+  const A=pad(a), B=pad(b), R=pad(ans); const w=Math.max(A.length,B.length+2,R.length);
+  return `<div class="col">${A.padStart(w)}\n<u>${(op+' '+B.padStart(w-2)).padStart(w)}</u>\n${R.padStart(w)}</div>`;
+}
+
+function finish(q, ans, cands, padFn){
+  const seen=new Set([ans.k]), opts=[ans];
+  for(const c of cands){ if(c && !seen.has(c.k) && opts.length<4){ seen.add(c.k); opts.push(c); } }
+  for(let i=1; opts.length<4 && i<60; i++){ const c=padFn(i); if(c && !seen.has(c.k)){ seen.add(c.k); opts.push(c); } }
+  q.ans = ans; q.opts = shuffle(opts); return q;
+}
+const padNum = (x, step) => i => { const v = x + (i%2 ? 1 : -1)*Math.ceil(i/2)*step; return v>0 ? numC(v) : null; };
+const padFr = (n,d) => i => { const nn = n + (i%2 ? 1 : -1)*Math.ceil(i/2); return nn>0 ? frC(nn,d) : null; };
+
+/* ================= QUESTION GENERATORS (numbers differ from Quiz 1) ================= */
+const GEN = {
+  vocab(){
+    let b,c; do{ b=rnd(3,9); c=rnd(6,15); }while(b===c || (b===7 && c===12));
+    const a=b*c; const [role,val] = pick([['dividend',a],['divisor',b],['quotient',c]]);
+    return finish({part:1, time:25,
+      q:`In <span class="eq">${a} ÷ ${b} = ${c}</span>, the number <u>${val}</u> is called the…`,
+      hint:'Remember: dividend ÷ divisor = quotient',
+      why:`In ${a} ÷ ${b} = ${c}: <b>${a}</b> is the dividend (the number being divided), <b>${b}</b> is the divisor, and <b>${c}</b> is the quotient (the answer).`},
+      wordC(role), ['dividend','divisor','quotient','product'].filter(x=>x!==role).map(wordC), ()=>null);
+  },
+  recip(){
+    if(Math.random()<.6){
+      let n,d; do{ d=rnd(3,12); n=rnd(1,d-1); }while(gcd(n,d)!==1 || (n===3&&d===8));
+      return finish({part:1, time:25, q:`The reciprocal of ${F(n,d)} is…`, hint:'Flip the fraction. A number × its reciprocal = 1',
+        why:`Flip the fraction: ${F(n,d)} → <b>${F(d,n)}</b>. Check: ${F(n,d)} × ${F(d,n)} = ${F(n*d,n*d)} = 1`},
+        {h:F(d,n), k:`r${d}/${n}`}, [{h:F(n,d),k:`r${n}/${d}`},{h:F(1,d),k:`r1/${d}`},{h:F(1,n),k:`r1/${n}`},{h:F(d,n*2),k:`r${d}/${n*2}`}], ()=>null);
+    }
+    let w,n,d; do{ w=rnd(1,4); d=rnd(2,6); n=rnd(1,d-1); }while(gcd(n,d)!==1);
+    const I=w*d+n;
+    return finish({part:1, time:30, q:`The reciprocal of ${mixedH(w,n,d)} is…`, hint:'First change the mixed number to an improper fraction, then flip',
+      why:`${mixedH(w,n,d)} = ${F(I,d)}. Flip it: <b>${F(d,I)}</b>.`},
+      {h:F(d,I),k:`r${d}/${I}`}, [{h:F(I,d),k:`r${I}/${d}`},{h:mixedH(w,d,n).replace('mixed','mixed'),k:`m${w}-${d}/${n}`},{h:F(1,I),k:`r1/${I}`}], ()=>null);
+  },
+  decmul(){
+    let x,z; do{ x=rnd(11,99); z=rnd(2,9); }while(x%10===0 || (x===45&&z===2));
+    const a=x/10, b=z/10, p=x*z/100;
+    return finish({part:1, time:35, q:`<span class="eq">${numS(a)} × ${numS(b)} =</span>`, hint:'Multiply like whole numbers, then count the decimal places',
+      why:`${x} × ${z} = ${x*z}. There are 1 + 1 = 2 decimal places, so the answer is <b>${numS(p)}</b>.`},
+      numC(p), [numC(p*10), numC(p/10), numC(a+b), numC(x*z)], padNum(p, .1));
+  },
+  wholeunit(){
+    let n,d; do{ n=rnd(3,12); d=rnd(2,9); }while(n===6&&d===2);
+    return finish({part:1, time:30, q:`<span class="eq">${n} ÷ ${F(1,d)} =</span>`, hint:`How many ${d===2?'halves':'pieces of size 1/'+d} fit in ${n}?`,
+      why:`Keep, change, flip: ${n} ÷ ${F(1,d)} = ${n} × ${F(d,1)} = <b>${n*d}</b>. There are ${d} pieces in each whole, so ${n} × ${d} = ${n*d}.`},
+      frC(n*d,1), [frC(n,d), frC(1,n*d), frC(n+d,1)], padFr(n*d,1));
+  },
+  decadd(){
+    let A,B; do{ A=rnd(1001,9999); B=rnd(101,999); }while(A%10===0 || B%10===0 || (A===4611&&B===238));
+    const a=numS(A/100), b=numS(B/10), S=A+B*10, ans=numS(S/100);
+    return finish({part:2, time:50, q:`<span class="eq">${a} + ${b} =</span>`, hint:'Line up the decimal points. Write a zero to fill the empty place',
+      why:`Line up the decimal points (${b} = ${(B/10).toFixed(2)}):<br>${column(a,b,'+',ans)}<br>The answer is <b>${ans}</b>.`},
+      numC(S/100), [numC((A+B)/100), numC((S+100)/100), numC((S-10)/100), numC((S+10)/100)], padNum(S/100,.1));
+  },
+  decsub(){
+    let A,B; do{ A=rnd(2000,9899); B=rnd(1000,A-150); }while(A%10===0 || B%10===0 || (A===1598&&B===1226));
+    const R=A-B, a=numS(A/100), b=numS(B/100), ans=numS(R/100);
+    const sa=String(A).padStart(4,'0'), sb=String(B).padStart(4,'0');
+    const nb=+[...sa].map((c,i)=>Math.abs(+c - +sb[i])).join('');
+    return finish({part:2, time:50, q:`<span class="eq">${a} − ${b} =</span>`, hint:'Line up the decimal points. Borrow (regroup) when the top digit is smaller',
+      why:`${column(a,b,'−',ans)}<br>Subtract place by place from the right, regrouping when needed. The answer is <b>${ans}</b>.`},
+      numC(R/100), [numC(nb/100), numC((R+100)/100), numC((R-10)/100), numC((A+B)/100)], padNum(R/100,.1));
+  },
+  wholedec(){
+    let w,D; do{ w=rnd(12,60); D=rnd(11,99); }while(D%10===0 || (w===23&&D===13));
+    const R=w*10-D, dd=numS(D/10), ans=numS(R/10);
+    return finish({part:2, time:45, q:`<span class="eq">${w} − ${dd} =</span>`, hint:`Write ${w} as ${w}.0 so the decimal points line up`,
+      why:`${w} = ${w}.0, so the points line up:<br>${column(w+'.0',dd,'−',ans)}<br>0 − ${D%10} needs borrowing, so the answer is <b>${ans}</b>.`},
+      numC(R/10), [numC(w-Math.floor(D/10)+(D%10)/10), numC((R+10)/10), numC((R-10)/10), w-D>0?numC(w-D):null], padNum(R/10,.1));
+  },
+  wholefrac(){
+    let w,n,d; do{ w=rnd(2,9); n=rnd(2,5); d=rnd(n+1,9); }while(gcd(n,d)!==1 || (w*d)%n===0 || (w===5&&n===2&&d===3));
+    return finish({part:3, time:55, q:`<span class="eq">${w} ÷ ${F(n,d)} =</span>`, hint:'Keep, change, flip. Write the answer in simplest form',
+      why:`${w} ÷ ${F(n,d)} = ${w} × ${F(d,n)} = ${F(w*d,n)} = <b>${frH(w*d,n)}</b>`},
+      frC(w*d,n), [frC(w*n,d), frC(n,w*d), frC(w*d,1), frC(w*d+1,n)], padFr(w*d,n));
+  },
+  fracfrac(){
+    let a,b,c,d; do{ b=rnd(2,10); a=rnd(1,b-1); d=rnd(2,12); c=rnd(1,d-1); }while(gcd(a,b)!==1 || gcd(c,d)!==1 || a*d===b*c || (a===3&&b===4&&c===3&&d===8));
+    return finish({part:3, time:55, q:`<span class="eq">${F(a,b)} ÷ ${F(c,d)} =</span>`, hint:'Keep the first fraction, change ÷ to ×, flip the second',
+      why:`${F(a,b)} ÷ ${F(c,d)} = ${F(a,b)} × ${F(d,c)} = ${F(a*d,b*c)} = <b>${frH(a*d,b*c)}</b>`},
+      frC(a*d,b*c), [frC(a*c,b*d), frC(b*c,a*d), frC(a*d+b*c,b*c)], padFr(a*d,b*c));
+  },
+  mixedfrac(){
+    let w,n,d,p,q; do{ w=rnd(1,3); d=rnd(2,6); n=rnd(1,d-1); q=rnd(2,6); p=rnd(1,q-1); }while(gcd(n,d)!==1 || gcd(p,q)!==1 || (w===1&&n===3&&d===4&&p===1&&q===2));
+    const I=w*d+n;
+    return finish({part:3, time:60, q:`<span class="eq">${mixedH(w,n,d)} ÷ ${F(p,q)} =</span>`, hint:'Change the mixed number to an improper fraction first',
+      why:`${mixedH(w,n,d)} = ${F(I,d)}. Then ${F(I,d)} × ${F(q,p)} = ${F(I*q,d*p)} = <b>${frH(I*q,d*p)}</b>`},
+      frC(I*q,d*p), [frC(I*p,d*q), frC(w*q*d+n*p, d*p), frC(d*p,I*q)], padFr(I*q,d*p));
+  }
+};
+const ORDER = ['vocab','recip','decmul','wholeunit','decadd','decsub','wholedec','wholefrac','fracfrac','mixedfrac'];
+const PART = {1:'Part 1 · Choose the correct answer', 2:'Part 2 · Standard algorithm', 3:'Part 3 · Divide, simplest form'};
+
+/* ================= JUDGE OOPS (SVG) ================= */
+function judgeSVG(face){
+  const eyeL=[80,92], eyeR=[120,92];
+  const spin = (cw) => `<animateTransform attributeName="transform" type="rotate" from="0" to="${cw?360:-360}" dur=".55s" repeatCount="indefinite"/>`;
+  let pupils='', mouth='', brows='', extra='', lids='';
+  const pup = (x,y,dx,dy,r=5,anim='') => `<g transform="translate(${x} ${y})"><g>${anim}<circle cx="${dx}" cy="${dy}" r="${r}" fill="#1D2B3A"/><circle cx="${dx+1.5}" cy="${dy-1.8}" r="1.6" fill="#fff"/></g></g>`;
+  let eyeR1=11, eyeR2=11;
+  switch(face){
+    case 'googly':
+      pupils = pup(...eyeL,5,0,5,spin(true)) + pup(...eyeR,5,0,5,spin(false));
+      brows = `<path d="M68 70 q12 -10 24 -2" /><path d="M108 68 q12 -8 24 2" />`;
+      mouth = `<path d="M84 128 q6 -7 12 0 t12 0 t12 0" stroke="#7A2E2E" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+      break;
+    case 'tongue':
+      pupils = pup(...eyeL,4,2,5) + pup(...eyeR,-4,2,5);
+      brows = `<path d="M68 76 l24 -4" /><path d="M108 72 l24 4" />`;
+      mouth = `<path d="M84 124 q16 12 32 0" stroke="#7A2E2E" stroke-width="4" fill="none" stroke-linecap="round"/><g><path d="M92 128 q8 22 16 0 z" fill="#FF7A8A" stroke="#C94B5D" stroke-width="2"><animateTransform attributeName="transform" type="rotate" values="-12 100 128;12 100 128;-12 100 128" dur=".5s" repeatCount="indefinite"/></path></g>`;
+      break;
+    case 'shock':
+      eyeR1=14; eyeR2=14;
+      pupils = pup(...eyeL,0,0,3) + pup(...eyeR,0,0,3);
+      brows = `<path d="M66 62 q12 -8 24 0" /><path d="M110 62 q12 -8 24 0" />`;
+      mouth = `<ellipse cx="100" cy="130" rx="9" ry="12" fill="#7A2E2E"><animate attributeName="ry" values="12;15;12" dur=".4s" repeatCount="indefinite"/></ellipse>`;
+      extra = `<g fill="#FFC93C" font-family="Arial" font-weight="700" font-size="22"><text x="150" y="48">!</text><text x="160" y="66">?</text><text x="32" y="52">!</text></g>`;
+      break;
+    case 'squint':
+      eyeR2=6;
+      pupils = pup(...eyeL,3,0,6) + `<path d="M110 92 h20" stroke="#1D2B3A" stroke-width="4" stroke-linecap="round"/>`;
+      brows = `<path d="M66 64 q12 -12 26 -2" /><path d="M108 84 l24 -4" />`;
+      mouth = `<path d="M88 128 q14 -2 26 -10" stroke="#7A2E2E" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+      extra = `<g transform="translate(150 40)"><circle r="14" fill="none" stroke="#1D2B3A" stroke-width="4"/><path d="M10 10 l14 14" stroke="#1D2B3A" stroke-width="5" stroke-linecap="round"/><animateTransform attributeName="transform" type="translate" values="150 40;158 34;150 40" dur="1s" repeatCount="indefinite"/></g>`;
+      break;
+    case 'sleepy':
+      pupils = pup(...eyeL,0,3,4) + pup(...eyeR,0,3,4);
+      lids = `<path d="M69 92 a11 11 0 0 1 22 0 z" fill="#E8B48C"/><path d="M109 92 a11 11 0 0 1 22 0 z" fill="#E8B48C"/>`;
+      brows = `<path d="M68 76 l24 0" /><path d="M108 76 l24 0" />`;
+      mouth = `<ellipse cx="100" cy="130" rx="7" ry="6" fill="#7A2E2E"/>`;
+      extra = `<g fill="#6C5CE7" font-family="Arial" font-weight="700"><text x="146" y="60" font-size="18">z<animate attributeName="y" values="60;40;60" dur="2s" repeatCount="indefinite"/></text><text x="160" y="42" font-size="24">Z<animate attributeName="y" values="42;22;42" dur="2s" repeatCount="indefinite"/></text></g>`;
+      break;
+    default: // happy
+      pupils = pup(...eyeL,0,1,5) + pup(...eyeR,0,1,5);
+      brows = `<path d="M68 72 q12 -8 24 0" /><path d="M108 72 q12 -8 24 0" />`;
+      mouth = `<path d="M84 122 q16 18 32 0" stroke="#7A2E2E" stroke-width="4" fill="#fff" stroke-linecap="round"/>`;
+  }
+  const gavelAnim = face==='happy' ? '' : `<animateTransform attributeName="transform" type="rotate" values="0 162 178;-55 162 178;12 162 178;-55 162 178;12 162 178;0 162 178" keyTimes="0;.2;.35;.55;.7;1" dur="1.2s" repeatCount="1"/>`;
+  const wigAnim = face==='shock' ? `<animateTransform attributeName="transform" type="translate" values="0 0;0 -14;0 0" dur=".45s" repeatCount="3"/>` : '';
+  return `<svg viewBox="0 0 200 230" role="img" aria-label="Judge Oops ${face==='happy'?'smiling':'making a funny face'}">
+    <path d="M40 230 q0 -62 60 -66 q60 4 60 66 z" fill="#1D2B3A"/>
+    <path d="M86 166 l14 22 l14 -22 z" fill="#fff"/><path d="M92 178 h16 v18 h-16z" fill="#fff"/>
+    <rect x="150" y="196" width="46" height="12" rx="3" fill="#8A5A2B"/>
+    <g>${wigAnim}
+      <g fill="#F7F7F2" stroke="#D5D2C4" stroke-width="2">
+        <circle cx="54" cy="104" r="15"/><circle cx="146" cy="104" r="15"/><circle cx="52" cy="128" r="14"/><circle cx="148" cy="128" r="14"/><circle cx="56" cy="150" r="13"/><circle cx="144" cy="150" r="13"/>
+      </g>
+    </g>
+    <circle cx="100" cy="100" r="46" fill="#F2C39A"/>
+    <circle cx="56" cy="104" r="8" fill="#E8B48C"/><circle cx="144" cy="104" r="8" fill="#E8B48C"/>
+    <g>${wigAnim}
+      <g fill="#F7F7F2" stroke="#D5D2C4" stroke-width="2">
+        <circle cx="62" cy="72" r="15"/><circle cx="76" cy="56" r="15"/><circle cx="100" cy="50" r="16"/><circle cx="124" cy="56" r="15"/><circle cx="138" cy="72" r="15"/>
+      </g>
+    </g>
+    <circle cx="80" cy="92" r="${eyeR1}" fill="#fff" stroke="#1D2B3A" stroke-width="2"/>
+    <circle cx="120" cy="92" r="${eyeR2}" fill="#fff" stroke="#1D2B3A" stroke-width="2"/>
+    ${pupils}${lids}
+    <g stroke="#6B4A2E" stroke-width="4" fill="none" stroke-linecap="round">${brows}</g>
+    <circle cx="100" cy="110" r="6" fill="#E89A7A"/>
+    <circle cx="70" cy="116" r="7" fill="#FF9AA2" opacity=".5"/><circle cx="130" cy="116" r="7" fill="#FF9AA2" opacity=".5"/>
+    ${mouth}
+    <g>${gavelAnim}
+      <rect x="158" y="120" width="8" height="58" rx="3" fill="#A0703F"/>
+      <rect x="140" y="104" width="44" height="22" rx="6" fill="#7A4B22"/>
+      <rect x="146" y="104" width="6" height="22" fill="#C9A06A"/><rect x="172" y="104" width="6" height="22" fill="#C9A06A"/>
+    </g>
+    <circle cx="160" cy="180" r="10" fill="#F2C39A"/>
+    ${extra}
+  </svg>`;
+}
+$('#heroJudge').innerHTML = judgeSVG('happy');
+
+const JUDGE_LINES = {
+  googly:['Objection! That answer made my eyes spin!','Order in the court! My eyes went round and round!'],
+  tongue:['Bleh! That answer tastes wrong!','The court says… blehhh!'],
+  shock:['Oh no! Even my wig jumped!','Whaaat? My wig nearly flew away!'],
+  squint:['Hmm… the court is NOT convinced!','Let me look closer… nope!']
+};
+const REWARD_LINES = ['Brilliant, {n}!','Case closed! You nailed it, {n}!','Math Thinker power, {n}!','Superstar move, {n}!','Genius alert! Well done, {n}!','Ms. Amira would be proud, {n}!'];
+const STICKERS = ['🌟','🦄','👑','🌈','🦋','🏆','💎','🍭','🎀','🌸','🐱','🍩','🧁','🐬','🪐','🎈'];
+
+/* ================= CONFETTI ================= */
+const fx = $('#fx'), cx = fx.getContext('2d'); let parts=[], fxOn=false;
+function sizeFx(){ fx.width = innerWidth*devicePixelRatio; fx.height = innerHeight*devicePixelRatio; }
+addEventListener('resize', sizeFx); sizeFx();
+function confetti(n=120){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cols=['#FF5E5B','#FFC93C','#22B8A7','#6C5CE7','#FF9AA2','#ffffff'];
+  for(let i=0;i<n;i++) parts.push({x:fx.width/2 + (Math.random()-.5)*fx.width*.3, y:fx.height*.35, vx:(Math.random()-.5)*18*devicePixelRatio, vy:(-Math.random()*16-6)*devicePixelRatio, s:(6+Math.random()*7)*devicePixelRatio, r:Math.random()*6, vr:(Math.random()-.5)*.4, c:pick(cols), life:0});
+  if(!fxOn){ fxOn=true; requestAnimationFrame(tickFx); }
+}
+function tickFx(){
+  cx.clearRect(0,0,fx.width,fx.height);
+  parts.forEach(p=>{ p.vy+=.45*devicePixelRatio; p.vx*=.99; p.x+=p.vx; p.y+=p.vy; p.r+=p.vr; p.life++; cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle=p.c; cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); cx.restore(); });
+  parts = parts.filter(p => p.y < fx.height+40 && p.life<400);
+  if(parts.length) requestAnimationFrame(tickFx); else { fxOn=false; cx.clearRect(0,0,fx.width,fx.height); }
+}
+
+/* ================= LEADERBOARD ================= */
+const BOARD_KEY='m3-thinker-board';
+function renderBoard(el, highlight){
+  const b = store.get(BOARD_KEY, []).slice().sort((x,y)=>y.score-x.score || y.correct-x.correct).slice(0,10);
+  const medal = i => ['🥇','🥈','🥉'][i] || (i+1);
+  el.innerHTML = `<h3>🏆 Class leaderboard</h3>` + (b.length
+    ? `<ol>${b.map((r,i)=>`<li class="${highlight && r.id===highlight ? 'me':''}"><span class="r">${medal(i)}</span><span>${esc(r.name)} <small>${esc(r.cls)} · ${r.correct}/${r.total} correct</small></span><span class="s">${r.score}</span></li>`).join('')}</ol>`
+    : `<p class="empty">No scores yet. Be the first Math Thinker on the board!</p>`) +
+    `<details class="teacher"><summary>Teacher: clear the leaderboard</summary><div class="pin"><input type="password" inputmode="numeric" placeholder="Teacher PIN" aria-label="Teacher PIN"><button type="button">Clear</button><span class="pinmsg" aria-live="polite"></span></div></details>`;
+  const pin = el.querySelector('.pin');
+  pin.querySelector('button').addEventListener('click', () => {
+    const v = pin.querySelector('input').value;
+    if(v==='2468'){ store.set(BOARD_KEY, []); renderBoard(el); }
+    else pin.querySelector('.pinmsg').textContent = 'Wrong PIN.';
+  });
+}
+renderBoard($('#boardStart'));
+
+/* ================= GAME ================= */
+const G = { name:'', cls:'', qs:[], i:0, score:0, streak:0, best:0, correct:0, stickers:[], log:[], timer:null, tEnd:0, lastSec:0, locked:true, total:12 };
+
+$('#startForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const n = $('#pName').value.trim();
+  if(!n){ $('#nameErr').hidden=false; $('#pName').focus(); return; }
+  $('#nameErr').hidden = true; S.init();
+  G.name = n; G.cls = $('#pClass').value;
+  store.set('m3-last', {name:n, cls:G.cls});
+  newGame();
+});
+const last = store.get('m3-last', null); if(last){ $('#pName').value = last.name; $('#pClass').value = last.cls; }
+
+function show(id){ ['#scrStart','#scrPlay','#scrEnd'].forEach(s => $(s).hidden = s!==id); scrollTo({top:0, behavior:'smooth'}); }
+
+function newGame(){
+  const bonus = shuffle(ORDER).slice(0,2);
+  G.qs = ORDER.map(k => GEN[k]()).concat(bonus.map(k => Object.assign(GEN[k](), {bonus:true})));
+  Object.assign(G, {i:0, score:0, streak:0, best:0, correct:0, stickers:[], log:[]});
+  $('#hName').textContent = G.name; $('#hShelf').textContent = '';
+  updateHud(); show('#scrPlay');
+  // countdown
+  const ov = $('#qOverlay'); $('#qText').innerHTML=''; $('#qChoices').innerHTML=''; $('#qHint').textContent='';
+  let c = 3;
+  const step = () => {
+    if(c>0){ ov.innerHTML = `<div class="countdown"><div><p>Get ready, ${esc(G.name)}!</p><b class="count">${c}</b></div></div>`; S.play('count'); c--; setTimeout(step, 800); }
+    else { ov.innerHTML = `<div class="countdown"><div><b class="count" style="color:var(--mint)">GO!</b></div></div>`; S.play('go'); setTimeout(() => { ov.innerHTML=''; render(); }, 600); }
+  };
+  step();
+}
+function updateHud(){
+  $('#hQ').textContent = `${Math.min(G.i+1, G.qs.length)}/${G.qs.length}`;
+  $('#hScore').textContent = G.score; $('#hStreak').textContent = G.streak>=2 ? `${G.streak} 🔥` : G.streak;
+}
+function render(){
+  const q = G.qs[G.i]; G.locked = false;
+  $('#qOverlay').innerHTML = '';
+  const part = $('#qPart'); part.textContent = q.bonus ? 'Bonus round · Double time bonus' : PART[q.part]; part.className = 'part ' + (q.bonus ? 'bonus' : 'p'+q.part);
+  $('#qNum').textContent = `Question ${G.i+1} of ${G.qs.length}`;
+  $('#qText').innerHTML = q.q; $('#qHint').textContent = '💡 ' + q.hint;
+  $('#qChoices').innerHTML = q.opts.map((o,i) => `<button type="button" class="choice" data-i="${i}"><span class="k">${'ABCD'[i]}</span><span class="v">${o.h}</span></button>`).join('');
+  document.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () => answer(+b.dataset.i)));
+  updateHud(); S.play('question'); startTimer(q.time);
+}
+function startTimer(sec){
+  clearInterval(G.timer); G.tEnd = performance.now() + sec*1000; G.tTotal = sec; G.lastSec = sec;
+  const bar=$('#tBar'), txt=$('#tTxt');
+  const upd = () => {
+    const left = Math.max(0, (G.tEnd - performance.now())/1000), s = Math.ceil(left);
+    bar.style.width = (left/G.tTotal*100)+'%';
+    bar.className = left <= 5 ? 'danger' : left <= G.tTotal*.4 ? 'warn' : '';
+    txt.textContent = `${s} s`;
+    if(s !== G.lastSec){ G.lastSec = s; if(s<=5 && s>0) S.play('tick'); }
+    if(left<=0){ clearInterval(G.timer); timeUp(); }
+  };
+  upd(); G.timer = setInterval(upd, 100);
+}
+function secondsLeft(){ return Math.max(0, Math.ceil((G.tEnd - performance.now())/1000)); }
+
+function markChoices(chosen){
+  const q = G.qs[G.i];
+  document.querySelectorAll('.choice').forEach((b,i) => {
+    b.disabled = true;
+    if(q.opts[i].k === q.ans.k) b.classList.add('right');
+    else if(i === chosen) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+}
+function answer(i){
+  if(G.locked) return; G.locked = true; clearInterval(G.timer);
+  const q = G.qs[G.i], ok = q.opts[i].k === q.ans.k, left = secondsLeft();
+  markChoices(i);
+  if(ok){
+    G.correct++; G.streak++; G.best = Math.max(G.best, G.streak);
+    const base=100, tb = left*(q.bonus?6:3), sb = G.streak>=3 ? 50 : 0, pts = base+tb+sb;
+    G.score += pts; const st = pick(STICKERS); G.stickers.push(st); $('#hShelf').textContent = G.stickers.join('');
+    G.log.push({q, ok:true, chosen:q.opts[i]});
+    updateHud(); setTimeout(() => reward(st, base, tb, sb, pts), 450);
+  } else {
+    G.streak = 0; G.log.push({q, ok:false, chosen:q.opts[i]}); updateHud();
+    $('#qCard').classList.remove('shake'); void $('#qCard').offsetWidth; $('#qCard').classList.add('shake');
+    setTimeout(() => judge(pick(['googly','tongue','shock','squint']), false), 500);
+  }
+}
+function timeUp(){
+  if(G.locked) return; G.locked = true;
+  G.streak = 0; G.log.push({q:G.qs[G.i], ok:false, chosen:null}); updateHud();
+  markChoices(-1); S.play('timeup');
+  setTimeout(() => judge('sleepy', true), 500);
+}
+function nextBtn(){ const last = G.i === G.qs.length-1; return `<button type="button" class="btn go" id="nextBtn">${last ? 'See my result 🏁' : 'Next question ▶'}</button>`; }
+function bindNext(){ const b=$('#nextBtn'); b.focus({preventScroll:true}); b.addEventListener('click', () => { S.play('click'); G.i++; if(G.i >= G.qs.length) end(); else render(); }); }
+
+function reward(st, base, tb, sb, pts){
+  S.play('correct'); confetti();
+  $('#qOverlay').innerHTML = `<div class="overlay"><div class="fb reward">
+    <div class="sticker pop" aria-hidden="true">${st}</div>
+    <div>
+      <h2>${esc(pick(REWARD_LINES).replace('{n}', G.name))}</h2>
+      <p class="msg">Correct! You earned a new sticker for your collection.</p>
+      <div class="pts"><span>Correct +${base}</span><span>Speed +${tb}</span>${sb?`<span>🔥 Streak +${sb}</span>`:''}<span class="tot">+${pts} points</span></div>
+      <div class="actions">${nextBtn()}</div>
+    </div></div></div>`;
+  bindNext();
+}
+function judge(face, timeout){
+  S.play('wrong'); if(face==='sleepy') setTimeout(()=>S.play('snore'), 600); else setTimeout(()=>S.play('boing'), 1700);
+  const q = G.qs[G.i];
+  const line = timeout ? 'Zzz… oh! Time’s up! The court fell asleep waiting!' : pick(JUDGE_LINES[face]);
+  $('#qOverlay').innerHTML = `<div class="overlay"><div class="fb judge">
+    <div class="jsvg wobble">${judgeSVG(face)}</div>
+    <div>
+      <span class="speech">👨‍⚖️ ${line}</span>
+      <h2>${timeout ? 'Time’s up!' : 'Not quite!'}</h2>
+      <p class="msg">The correct answer is <b style="font-size:1.2em">${q.ans.h}</b></p>
+      <div class="why">${q.why}</div>
+      <p class="msg" style="font-size:.92rem;color:var(--muted);margin-top:8px">Don’t worry, ${esc(G.name)}. Thinkers learn from mistakes!</p>
+      <div class="actions">${nextBtn()}</div>
+    </div></div></div>`;
+  bindNext();
+}
+
+function end(){
+  clearInterval(G.timer);
+  const total = G.qs.length, pct = G.correct/total;
+  const stars = pct>=.9 ? 3 : pct>=.7 ? 2 : pct>=.4 ? 1 : 0;
+  const title = pct===1 ? 'PERFECT! Supreme Math Thinker!' : pct>=.75 ? 'Amazing work!' : pct>=.5 ? 'Good job! Keep going!' : 'Nice try! Play again to grow!';
+  const id = Date.now()+'-'+Math.random().toString(36).slice(2,6);
+  const board = store.get(BOARD_KEY, []); board.push({id, name:G.name, cls:G.cls, score:G.score, correct:G.correct, total, date:new Date().toISOString().slice(0,10)}); store.set(BOARD_KEY, board.slice(-200));
+  const face = pct>=.5 ? 'happy' : 'squint';
+  $('#scrEnd').innerHTML = `<div class="end">
+    <div>
+      <span class="kicker">Game over · ${esc(G.name)} · ${esc(G.cls)}</span>
+      <h2 style="font-size:2rem;margin-top:4px">${title}</h2>
+      <div class="big" style="margin-top:10px">${G.correct}/${total}</div>
+      <div class="stars" aria-label="${stars} of 3 stars">${'★'.repeat(stars)}<span class="off">${'★'.repeat(3-stars)}</span></div>
+      <div class="sum"><div><small>Points</small><b>${G.score}</b></div><div><small>Best streak</small><b>${G.best}</b></div><div><small>Stickers</small><b>${G.stickers.length}</b></div></div>
+      <p style="font-size:2rem;margin-top:12px;letter-spacing:3px">${G.stickers.join('') || '—'}</p>
+      <div class="actions"><button class="btn go" type="button" id="againBtn">Play again ↻</button><button class="btn soft" type="button" id="newBtn">New player</button></div>
+      <div class="review"><h3>Check your answers</h3><ul>${G.log.map((r,i)=>`<li class="${r.ok?'ok':''}"><b>${i+1}.</b> ${r.q.q} &nbsp;→ ${r.ok ? '✅ ' + r.q.ans.h : `❌ ${r.chosen ? 'you chose ' + r.chosen.h + ', ' : 'no answer, '}correct: <b>${r.q.ans.h}</b>`}</li>`).join('')}</ul></div>
+    </div>
+    <div>
+      <div style="display:flex;justify-content:center;margin-bottom:12px"><div style="width:180px">${judgeSVG(face)}</div></div>
+      <div class="board" id="boardEnd"></div>
+    </div></div>`;
+  renderBoard($('#boardEnd'), id);
+  $('#againBtn').addEventListener('click', () => { S.init(); newGame(); });
+  $('#newBtn').addEventListener('click', () => { $('#pName').value=''; renderBoard($('#boardStart')); show('#scrStart'); $('#pName').focus(); });
+  show('#scrEnd'); S.play('fanfare'); if(pct>=.5) confetti(200);
+}
+
+// keyboard: 1-4 or A-D to answer, Enter for next
+addEventListener('keydown', e => {
+  if($('#scrPlay').hidden) return;
+  const k = e.key.toLowerCase(); const map = {'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+  if(!G.locked && k in map && G.qs[G.i] && map[k] < G.qs[G.i].opts.length){ answer(map[k]); }
+});
+})();
+</script>
+
+</html>
